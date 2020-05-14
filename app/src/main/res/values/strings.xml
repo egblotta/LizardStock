@@ -1,0 +1,27 @@
+<resources>
+    <string name="app_name">Lizard Stock</string>
+    <string name="action_settings">Settings</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+
+    <string name="hello_first_fragment">Hello first fragment</string>
+    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+
+    <!-- Edit Text Names-->
+    <string name="id_articulo">Id</string>
+    <string name="nombre_articulo">Nombre</string>
+    <string name="cant_articulo">Cantidad por bulto</string>
+    <string name="cod_articulo">Código</string>
+    <string name="precio_articulo">Precio</string>
+    <string name="categoria">Categoria</string>
+
+    <!-- Buttons-->
+    <string name="btn_nuevo_art">Agregar Articulo</string>
+    <string name="btn_buscar_art">Buscar</string>
+    <string name="actualizar_art">Modificar</string>
+    <string name="eliminar_art">Eliminar</string>
+    <string name="subir_imagen">Subir Imagen</string>
+</resources>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="categorias">
+        <item>Alfombras</item>
+        <item>Bolsas residuos</item>
+        <item>Broches</item>
+        <item>Cabos</item>
+        <item>Cepillos</item>
+        <item>Escobillones</item>
+        <item>Esponjas</item>
+        <item>Fragancias</item>
+        <item>M.I.S-Plast</item>
+        <item>Mopas</item>
+        <item>Palas</item>
+        <item>Paños</item>
+        <item>Plasticos</item>
+        <item>Linea POP</item>
+        <item>Rejillas</item>
+        <item>Repasadores</item>
+        <item>Secadores de piso</item>
+        <item>Trapos de piso</item>
+        <item>Varios</item>
+    </string-array>
+</resources>

@@ -1,0 +1,93 @@
+{
+  "project_info": {
+    "project_number": "543968006734",
+    "firebase_url": "https://coco-stock.firebaseio.com",
+    "project_id": "coco-stock",
+    "storage_bucket": "coco-stock.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:543968006734:android:4d1ebec24a7d7e35",
+        "android_client_info": {
+          "package_name": "com.example.cocostock2"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "543968006734-ilaoqa03q88jv5sikuekvllv7ifi0krb.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.cocostock2",
+            "certificate_hash": "978a73b8690b71b91d5512c50e0d3e3474165d13"
+          }
+        },
+        {
+          "client_id": "543968006734-tkhc6l4hsgfsccqh7n5c5vp23epkpo91.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.cocostock2",
+            "certificate_hash": "243c3867d29eb39e0596f080f8f7ca1b71d4bf53"
+          }
+        },
+        {
+          "client_id": "543968006734-aslm469dpq3b28q46ohgb9rd47e541jk.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.cocostock2",
+            "certificate_hash": "1ef56444491295c3aa4c1031fa5d79da48622ca0"
+          }
+        },
+        {
+          "client_id": "543968006734-ru91vh7kjiab0gpm67qeuou1uffjgljp.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBe9Yjeu84QhZjesMtU4W9S2wX6jV7AqRk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "543968006734-ru91vh7kjiab0gpm67qeuou1uffjgljp.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:543968006734:android:5af2568691f77ee325291f",
+        "android_client_info": {
+          "package_name": "com.example.lizardstock"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "543968006734-ru91vh7kjiab0gpm67qeuou1uffjgljp.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBe9Yjeu84QhZjesMtU4W9S2wX6jV7AqRk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "543968006734-ru91vh7kjiab0gpm67qeuou1uffjgljp.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

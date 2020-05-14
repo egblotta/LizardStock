@@ -1,0 +1,2 @@
+rootProject.name='Lizard Stock'
+include ':app'
