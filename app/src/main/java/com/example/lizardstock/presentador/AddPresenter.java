@@ -3,11 +3,14 @@ package com.example.lizardstock.presentador;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.net.Uri;
+import android.provider.ContactsContract;
 import android.webkit.MimeTypeMap;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
+import com.example.lizardstock.modelo.Product;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -24,6 +27,7 @@ public class AddPresenter {
     private Context mContext;
     private StorageReference mStorage;
     private DatabaseReference mDatabase;
+    private ProgressBar progressBar;
 
     public AddPresenter(Context mContext, StorageReference mStorage, DatabaseReference mDatabase) {
         this.mContext = mContext;
@@ -31,16 +35,17 @@ public class AddPresenter {
         this.mDatabase = mDatabase;
     }
 
-    public String getFileExtension(Uri uri){
+    private String getFileExtension(Uri uri){
         ContentResolver cR = mContext.getContentResolver();
         MimeTypeMap mime =  MimeTypeMap.getSingleton();
         return mime.getExtensionFromMimeType(cR.getType(uri));
     }
 
-    public void firebaseUpload(final String categoria, final String nombre, final String cantidad, final String codigo, final String precio, final Uri imagenUri){
+    public void firebaseUpload(final String categoria, final String nombre, final String cantidad, final String codigo,
+                               final String precio, final Uri imagenUri){
 
         if(imagenUri!=null) {
-            final StorageReference imageRef = mStorage.child(codigo.trim() + "." + getFileExtension(imagenUri));
+            final StorageReference imageRef = mStorage.child(categoria).child("Imagenes").child(codigo.trim() + "." + getFileExtension(imagenUri));
             imageRef.putFile(imagenUri).continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
 
                 @Override
@@ -55,19 +60,21 @@ public class AddPresenter {
                 @Override
                 public void onComplete(@NonNull Task<Uri> task) {
                     if(task.isSuccessful()){
-                        Uri downloadLink = task.getResult();
 
+                        Uri downloadLink = task.getResult();
                         Map<String,Object> product = new HashMap<>();
-                        //product.put("nombre",nombre);
+                        product.put("nombre",nombre);
                         product.put("cantidad",cantidad);
                         product.put("codigo",codigo);
                         product.put("precio",precio);
-                        //product.put("categoria",categoria);
+                        product.put("categoria",categoria);
 
                         assert downloadLink != null;
-                        product.put("imagen", downloadLink.toString());
+                        product.put("imagenUrl", downloadLink.toString());
 
-                        mDatabase.child(categoria).child(nombre).updateChildren(product)
+                        DatabaseReference postRef = mDatabase.child("Articulos").child(categoria).child(nombre);
+
+                        postRef.updateChildren(product)
                                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                             @Override
                             public void onComplete(@NonNull Task<Void> task) {

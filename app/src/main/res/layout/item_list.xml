@@ -1,36 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.appcompat.widget.LinearLayoutCompat
     xmlns:android="http://schemas.android.com/apk/res/android"
-
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_gravity="center|top"
-    android:layout_marginTop="10dp"
-    android:orientation="horizontal">
+    android:orientation="horizontal"
+    android:layout_marginTop="5dp"
+    android:layout_marginBottom="5dp"
+    android:layout_marginEnd="10dp"
+    android:layout_marginStart="10dp"
+    android:gravity="center">
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_marginTop="10dp">
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginEnd="5dp"
+        android:layout_gravity="center">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginEnd="10dp"
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/txtCategoria"
-                android:layout_width="wrap_content"
+                android:id="@+id/txtNombre"
+                android:layout_width="300dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                android:text="@string/categoria"
+                android:text="@string/nombre_articulo"
                 android:textSize="25sp"
-                android:textStyle="bold"/>
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/txtCodigo"
@@ -38,17 +41,15 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:text="@string/cod_articulo"
-                android:textSize="25sp"
-                android:textStyle="bold" />
+                android:textSize="25sp"/>
 
             <TextView
-                android:id="@+id/txtNombre"
+                android:id="@+id/txtCategoria"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:text="@string/nombre_articulo"
-                android:textSize="25sp"
-                android:textStyle="bold" />
+                android:text="@string/categoria"
+                android:textSize="25sp"/>
 
             <TextView
                 android:id="@+id/txtCantidad"
@@ -56,19 +57,18 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:text="@string/cant_articulo"
-                android:textSize="25sp"
-                android:textStyle="bold" />
+                android:textSize="25sp"/>
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:layout_marginTop="10dp">
 
                 <TextView
                     android:id="@+id/txtPre"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
                     android:text="$"
                     android:textSize="30sp"
                     android:textStyle="bold" />
@@ -77,7 +77,6 @@
                     android:id="@+id/txtPrecio"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
                     android:layout_marginStart="10dp"
                     android:text="@string/precio_articulo"
                     android:textSize="30sp"
@@ -86,24 +85,29 @@
 
         </LinearLayout>
 
-        <ProgressBar
-            android:id="@+id/progressList"
-            android:layout_width="150dp"
-            android:layout_height="150dp"
-            android:visibility="gone"
-            android:layout_marginStart="100dp"
-            android:layout_marginTop="10dp"
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
             android:layout_marginBottom="10dp"
-            android:layout_marginEnd="10dp"/>
+            android:layout_gravity="end">
 
-        <ImageView
-            android:id="@+id/imgArticulo"
-            android:layout_width="250dp"
-            android:layout_height="250dp"
-            android:layout_marginStart="100dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
-            android:layout_marginEnd="10dp"/>
+            <ProgressBar
+                android:id="@+id/progressList"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:visibility="visible"
+                android:layout_centerInParent="true"/>
+
+            <ImageView
+                android:id="@+id/imgArticulo"
+                android:layout_width="250dp"
+                android:layout_height="250dp"
+                android:layout_marginTop="10dp"/>
+
+
+        </RelativeLayout>
 
     </LinearLayout>
 </androidx.appcompat.widget.LinearLayoutCompat>

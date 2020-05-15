@@ -7,15 +7,15 @@ public class Product {
     private String nombre;
     private String cantidad;
     private String precio;
-    private String imageUrl;
+    private String imagenUrl;
 
-    public Product(String categoria, String codigo, String nombre, String cantidad, String precio, String imageUrl) {
+    public Product(String categoria, String codigo, String nombre, String cantidad, String precio, String imagenUrl) {
         this.categoria = categoria;
         this.codigo = codigo;
         this.nombre = nombre;
         this.cantidad = cantidad;
         this.precio = precio;
-        this.imageUrl = imageUrl;
+        this.imagenUrl = imagenUrl;
     }
 
     public Product() {}
@@ -60,11 +60,11 @@ public class Product {
         this.precio = precio;
     }
 
-    public String getImageUrl() {
-        return imageUrl;
+    public String getImagenUrl() {
+        return imagenUrl;
     }
 
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
+    public void setImagenUrl(String imageUrl) {
+        this.imagenUrl = imageUrl;
     }
 }

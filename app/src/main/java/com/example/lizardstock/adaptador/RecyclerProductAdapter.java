@@ -47,8 +47,7 @@ public class RecyclerProductAdapter extends RecyclerView.Adapter<RecyclerProduct
     @Override
     public void onBindViewHolder(@NonNull final viewHolder holder, int position) {
 
-        final Product productModel = listProductos.get(position);
-
+        Product productModel = listProductos.get(position);
         //traemos la lista de articulos desde la posicion id, nombre, cantidad y lo asignamos a los campos definidos
         holder.txtCategoria.setText(productModel.getCategoria());
         holder.txtCodigo.setText(productModel.getCodigo());
@@ -59,11 +58,12 @@ public class RecyclerProductAdapter extends RecyclerView.Adapter<RecyclerProduct
         /*holder.txtCodigo.setText(listProductos.get(position).getCodigo());
         holder.txtNombre.setText(listProductos.get(position).getNombre());
         holder.txtPrecio.setText(listProductos.get(position).getPrecio());
-        holder.txtCantidad.setText(listProductos.get(position).getCantidad());*/
+        holder.txtCantidad.setText(listProductos.get(position).getCantidad());
+        holder.txtCategoria.setText(listProductos.get(position).getCategoria());*/
 
         //Carga la imagen en el imageView usando Picasso
         Glide.with(mContext)
-                .load(productModel.getImageUrl())
+                .load(productModel.getImagenUrl())
                 .listener(new RequestListener<Drawable>() {
                     @Override
                     public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
@@ -72,11 +72,10 @@ public class RecyclerProductAdapter extends RecyclerView.Adapter<RecyclerProduct
                         holder.imgArticulo.setImageResource(R.drawable.ic_error_black_24dp);
                         return false;
                     }
-
                     @Override
                     public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
                         holder.progressBar.setVisibility(View.GONE);
-                        holder.progressBar.setVisibility(View.VISIBLE);
+                        holder.imgArticulo.setVisibility(View.VISIBLE);
                         return false;
                     }
                 })
@@ -108,7 +107,6 @@ public class RecyclerProductAdapter extends RecyclerView.Adapter<RecyclerProduct
             txtPrecio=itemView.findViewById(R.id.txtPrecio);
             imgArticulo=itemView.findViewById(R.id.imgArticulo);
             progressBar = itemView.findViewById(R.id.progressList);
-
         }
 
         @Override

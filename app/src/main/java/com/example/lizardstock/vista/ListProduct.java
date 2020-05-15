@@ -4,11 +4,12 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.Spinner;
 
-import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -25,33 +26,48 @@ public class ListProduct extends Fragment implements View.OnClickListener{
     private ListPresenter listPresenter;
     private DatabaseReference mDatabase;
     private StorageReference mStorage;
-    private FloatingActionButton fab;
+    private Spinner spnCategoria;
 
 
     @Override
     public View onCreateView(
             LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_list_product, container, false);
+        final View view = inflater.inflate(R.layout.fragment_list_product, container, false);
         listPresenter = new ListPresenter(getContext(),mStorage,mDatabase);
+
+        spnCategoria = view.findViewById(R.id.spnLista);
+
+        ArrayAdapter<CharSequence> spnAdapter = ArrayAdapter.createFromResource(requireContext(),
+                R.array.categorias, android.R.layout.simple_spinner_item);
+        spnAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spnCategoria.setAdapter(spnAdapter);
 
         ImageView imagensc=view.findViewById(R.id.imagen_sinconexion);
         imagensc.setVisibility(View.INVISIBLE);
 
-        initRecycler(view);
+        spnCategoria.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View v, int position, long id) {
+                initRecycler(view,spnCategoria.getSelectedItem().toString());
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
 
+            }
+        });
         return view;
     }
 
-    private void initRecycler(View view){
+    private void initRecycler(View view, String categoria){
         RecyclerView mRecyclerView = view.findViewById(R.id.recyclerProducts);
+        mRecyclerView.setHasFixedSize(true);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         mRecyclerView.setLayoutManager(layoutManager);
-        listPresenter.fillRecyclerView(mRecyclerView);
+        listPresenter.fillRecyclerView(mRecyclerView, categoria);
     }
 
     @Override
     public void onClick(View v) {
-        fab.setOnClickListener(this);
 
     }
 
