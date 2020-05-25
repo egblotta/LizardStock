@@ -1,14 +1,11 @@
-package com.example.lizardstock.vista;
+package com.example.lizardstock.vista.Add;
 
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.provider.OpenableColumns;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,28 +16,21 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
+import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.navigation.fragment.NavHostFragment;
 
 import com.example.lizardstock.R;
+import com.example.lizardstock.interfaces.IAddProduct;
 import com.example.lizardstock.presentador.AddPresenter;
-import com.example.lizardstock.presentador.ListPresenter;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
 
-import java.io.File;
-import java.util.Objects;
-
-public class AddProduct extends Fragment implements View.OnClickListener {
+public class AddProductView extends Fragment implements View.OnClickListener, IAddProduct.View {
 
     private EditText etNombre, etCantidad, etCodigo, etPrecio;
     private ImageView imgProducto;
     private Spinner spnCategoria;
-    private AddPresenter addPresenter;
+    private ProgressBar progressAdd;
+    private IAddProduct.Presenter presenter;
     private static final int PICK_IMAGE_REQUEST = 1;
     private Uri imageUri;
 
@@ -49,59 +39,62 @@ public class AddProduct extends Fragment implements View.OnClickListener {
             LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_add_product, container, false);
 
-        //Referencias firebase
-        StorageReference mStorage = FirebaseStorage.getInstance().getReference();
-        DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
-        addPresenter = new AddPresenter(getContext(), mStorage, mDatabase);
-
         etCodigo = view.findViewById(R.id.etCodigo);
         etNombre = view.findViewById(R.id.etNombre);
         etCantidad = view.findViewById(R.id.etCantidad);
         etPrecio = view.findViewById(R.id.etPrecio);
         spnCategoria = view.findViewById(R.id.spnCategoria);
+        progressAdd = view.findViewById(R.id.progressAdd);
 
         ArrayAdapter<CharSequence> spnAdapter = ArrayAdapter.createFromResource(requireContext(),
                 R.array.categorias, android.R.layout.simple_spinner_item);
         spnAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spnCategoria.setAdapter(spnAdapter);
 
-        //Progress Bar
-        ProgressBar progressBar = view.findViewById(R.id.progressAdd);
-
         //Buttons
         Button btnNuevo = view.findViewById(R.id.btnAdd);
         btnNuevo.setOnClickListener(this);
         imgProducto = view.findViewById(R.id.imgProducto);
         imgProducto.setOnClickListener(this);
+        presenter = new AddPresenter(this);
 
         return view;
     }
 
     @Override
     public void onClick(View v) {
-
         switch (v.getId()){
             case R.id.imgProducto:
                 openFileChooser();
                 break;
             case R.id.btnAdd:
-                String nombre = etNombre.getText().toString().trim();
-                String cantidad = etCantidad.getText().toString().trim();
-                String codigo = etCodigo.getText().toString().trim();
-                String precio = etPrecio.getText().toString().trim();
-                String categoria = spnCategoria.getSelectedItem().toString().trim();
-                addPresenter.firebaseUpload(categoria, nombre, cantidad,codigo,precio,imageUri);
-                limpiarCampos();
+                try {
+                    addProduct();
+                    cleanFields();
+                }catch (Exception e){
+                    cleanFields();
+                    e.getMessage();
+                }
                 break;
         }
     }
 
-    //Abre la galeria
+    //Abre la galeria del dispositivo
     private void openFileChooser() {
         Intent intent = new Intent(Intent.ACTION_PICK);
         intent.setType("image/*");      //solo los tipos "image" son seleccionados
         intent.setAction(Intent.ACTION_GET_CONTENT);
         startActivityForResult(intent,PICK_IMAGE_REQUEST);
+    }
+
+    private void addProduct() {
+        progressAdd.setVisibility(View.VISIBLE);
+        String nombre = etNombre.getText().toString().trim();
+        String cantidad = etCantidad.getText().toString().trim();
+        String codigo = etCodigo.getText().toString().trim();
+        String precio = etPrecio.getText().toString().trim();
+        String categoria = spnCategoria.getSelectedItem().toString().trim();
+        presenter.firebaseUpload(categoria, nombre, cantidad, codigo, precio, imageUri);
     }
 
     //Devuelve el nombre de la imagen
@@ -111,14 +104,21 @@ public class AddProduct extends Fragment implements View.OnClickListener {
                 .query(uri, null, null, null, null, null)) {
             if (cursor != null && cursor.moveToFirst()) {
                 // get file name
-                fileName = cursor.getString(
-                        cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME));
+                fileName = cursor.getString(cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME));
             }
         }
         return fileName;
     }
 
-    //Muestra la imagen seleccionada en el imgView
+    private void cleanFields() {
+        etCodigo.setText("");
+        etNombre.setText("");
+        etCantidad.setText("");
+        etPrecio.setText("");
+        imgProducto.setImageResource(R.drawable.ic_image_black_24dp);
+    }
+
+    //Muestra la imagen seleccionada en el imgView y setea el nombre de la imagen al campo codigo
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -132,15 +132,12 @@ public class AddProduct extends Fragment implements View.OnClickListener {
                     e.printStackTrace();
                 }
         }
-
     }
 
-    private void limpiarCampos() {
-        etCodigo.setText("");
-        etNombre.setText("");
-        etCantidad.setText("");
-        etPrecio.setText("");
-        imgProducto.setImageResource(R.drawable.ic_image_black_24dp);
-    }
-
+    @Override
+    public void addSuccess(boolean success) {
+            if(success)
+                Toast.makeText(getContext(), "Articulo cargado.", Toast.LENGTH_SHORT).show();
+            progressAdd.setVisibility(View.GONE);
+        }
 }

@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/FirstFragment"
-        android:name="com.example.lizardstock.vista.ListProduct"
+        android:name="com.example.lizardstock.vista.List.ListProductView"
         android:label="@string/first_fragment_label"
         tools:layout="@layout/fragment_list_product">
         <action
@@ -20,7 +20,7 @@
     </fragment>
     <fragment
         android:id="@+id/addProduct"
-        android:name="com.example.lizardstock.vista.AddProduct"
+        android:name="com.example.lizardstock.vista.Add.AddProductView"
         android:label="fragment_add_product"
         tools:layout="@layout/fragment_add_product" >
         <action

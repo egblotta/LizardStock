@@ -39,23 +39,15 @@
                 android:id="@+id/txtCodigo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="30dp"
                 android:text="@string/cod_articulo"
-                android:textSize="25sp"/>
-
-            <TextView
-                android:id="@+id/txtCategoria"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:text="@string/categoria"
                 android:textSize="25sp"/>
 
             <TextView
                 android:id="@+id/txtCantidad"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="30dp"
                 android:text="@string/cant_articulo"
                 android:textSize="25sp"/>
 
@@ -63,7 +55,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:layout_marginTop="10dp">
+                android:layout_marginTop="30dp"
+                android:layout_marginBottom="10dp">
 
                 <TextView
                     android:id="@+id/txtPre"

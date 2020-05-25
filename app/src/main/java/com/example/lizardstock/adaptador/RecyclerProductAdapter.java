@@ -21,7 +21,7 @@ import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
 import com.example.lizardstock.R;
 import com.example.lizardstock.modelo.Product;
-import com.example.lizardstock.vista.DetailProduct;
+import com.example.lizardstock.vista.Detail.DetailProductView;
 
 import java.util.List;
 
@@ -49,19 +49,12 @@ public class RecyclerProductAdapter extends RecyclerView.Adapter<RecyclerProduct
 
         Product productModel = listProductos.get(position);
         //traemos la lista de articulos desde la posicion id, nombre, cantidad y lo asignamos a los campos definidos
-        holder.txtCategoria.setText(productModel.getCategoria());
         holder.txtCodigo.setText(productModel.getCodigo());
         holder.txtNombre.setText(productModel.getNombre());
         holder.txtPrecio.setText(productModel.getPrecio());
         holder.txtCantidad.setText(productModel.getCantidad());
 
-        /*holder.txtCodigo.setText(listProductos.get(position).getCodigo());
-        holder.txtNombre.setText(listProductos.get(position).getNombre());
-        holder.txtPrecio.setText(listProductos.get(position).getPrecio());
-        holder.txtCantidad.setText(listProductos.get(position).getCantidad());
-        holder.txtCategoria.setText(listProductos.get(position).getCategoria());*/
-
-        //Carga la imagen en el imageView usando Picasso
+        //Carga la imagen en el imageView usando Glide
         Glide.with(mContext)
                 .load(productModel.getImagenUrl())
                 .listener(new RequestListener<Drawable>() {
@@ -90,9 +83,10 @@ public class RecyclerProductAdapter extends RecyclerView.Adapter<RecyclerProduct
         return 0;
     }
 
+    //Referencia a item_list.xml
     class viewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        //Referencias
-        TextView txtCategoria, txtCodigo, txtNombre, txtCantidad, txtPrecio;
+
+        TextView txtCodigo, txtNombre, txtCantidad, txtPrecio;
         ImageView imgArticulo;
         ProgressBar progressBar;
 
@@ -100,7 +94,6 @@ public class RecyclerProductAdapter extends RecyclerView.Adapter<RecyclerProduct
             super(itemView);
 
             itemView.setOnClickListener(this);
-            txtCategoria=itemView.findViewById(R.id.txtCategoria);
             txtCodigo=itemView.findViewById(R.id.txtCodigo);
             txtNombre=itemView.findViewById(R.id.txtNombre);
             txtCantidad=itemView.findViewById(R.id.txtCantidad);
@@ -111,7 +104,7 @@ public class RecyclerProductAdapter extends RecyclerView.Adapter<RecyclerProduct
 
         @Override
         public void onClick(View v) {
-            Intent intent = new Intent(mContext, DetailProduct.class);
+            Intent intent = new Intent(mContext, DetailProductView.class);
             mContext.startActivity(intent);
         }
     }

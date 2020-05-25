@@ -15,7 +15,7 @@
         android:theme="@style/AppTheme">
 
         <activity
-            android:name=".vista.DetailProduct"
+            android:name=".vista.Detail.DetailProductView"
             android:label="@string/app_name">
         </activity>
         <activity android:name=".vista.SplashActivity">
