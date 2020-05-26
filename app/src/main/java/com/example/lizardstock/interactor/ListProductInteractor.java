@@ -1,6 +1,7 @@
 package com.example.lizardstock.interactor;
 
 import android.content.Context;
+import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -25,14 +26,9 @@ import java.util.List;
 public class ListProductInteractor implements IListProduct.Interactor{
 
     private DatabaseReference mDatabase;
-    private List<Product> mProducts;
     private RecyclerProductAdapter mAdapter;
-    private IListProduct.Presenter presenter;
-    private Context mContext;
 
-    public ListProductInteractor(IListProduct.Presenter presenter, Context mContext) {
-        this.presenter = presenter;
-        this.mContext = mContext;
+    public ListProductInteractor(IListProduct.Presenter presenter) {
         mDatabase=FirebaseDatabase.getInstance().getReference();
     }
 
@@ -43,20 +39,21 @@ public class ListProductInteractor implements IListProduct.Interactor{
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                mProducts = new ArrayList<>();
-                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-                    Product product = postSnapshot.getValue(Product.class);
-                    mProducts.add(product);
-                }
-                mAdapter = new RecyclerProductAdapter(mContext, mProducts, R.layout.item_list);
-                recyclerView.setAdapter(mAdapter);
-                presenter.addSuccess(true);
+                ArrayList<Product> mProducts = new ArrayList<>();
+                mProducts.clear();
+
+                    for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                        Product product = postSnapshot.getValue(Product.class);
+                        mProducts.add(product);
+                    }
+                    mAdapter = new RecyclerProductAdapter(mProducts);
+                    recyclerView.setAdapter(mAdapter);
+                    mAdapter.notifyDataSetChanged();
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                presenter.addSuccess(false);
-                Toast.makeText(mContext, databaseError.getCode(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(recyclerView.getContext(), "Error al cargar la lista.", Toast.LENGTH_SHORT).show();
             }
         });
     }

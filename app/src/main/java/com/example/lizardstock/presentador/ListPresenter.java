@@ -15,12 +15,10 @@ public class ListPresenter implements IListProduct.Presenter {
 
     private IListProduct.View view;
     private ListProductInteractor interactor;
-    private Context mContext;
 
-    public ListPresenter(IListProduct.View view, Context mContext) {
+    public ListPresenter(IListProduct.View view) {
         this.view = view;
-        this.mContext = mContext;
-        this.interactor = new ListProductInteractor(this,mContext);
+        this.interactor = new ListProductInteractor(this);
     }
 
     @Override
@@ -30,10 +28,4 @@ public class ListPresenter implements IListProduct.Presenter {
         }
     }
 
-    @Override
-    public void addSuccess(boolean success) {
-        if(view!=null){
-            view.addSuccess(success);
-        }
-    }
 }

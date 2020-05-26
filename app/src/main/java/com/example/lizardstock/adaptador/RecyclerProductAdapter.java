@@ -27,20 +27,16 @@ import java.util.List;
 
 public class RecyclerProductAdapter extends RecyclerView.Adapter<RecyclerProductAdapter.viewHolder> {
 
-    private Context mContext;
     private List<Product> listProductos;
-    private int layoutResource;
 
-    public RecyclerProductAdapter(Context mContext, List<Product> listProductos, int layoutResource) {
-        this.mContext = mContext;
+    public RecyclerProductAdapter(List<Product> listProductos) {
         this.listProductos = listProductos;
-        this.layoutResource = layoutResource;
     }
 
     @NonNull
     @Override
     public viewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
-        View view = LayoutInflater.from(mContext).inflate(R.layout.item_list,viewGroup,false);
+        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_list,viewGroup,false);
         return new viewHolder(view);
     }
 
@@ -55,7 +51,7 @@ public class RecyclerProductAdapter extends RecyclerView.Adapter<RecyclerProduct
         holder.txtCantidad.setText(productModel.getCantidad());
 
         //Carga la imagen en el imageView usando Glide
-        Glide.with(mContext)
+        Glide.with(holder.itemView.getContext())
                 .load(productModel.getImagenUrl())
                 .listener(new RequestListener<Drawable>() {
                     @Override
@@ -77,10 +73,7 @@ public class RecyclerProductAdapter extends RecyclerView.Adapter<RecyclerProduct
 
     @Override
     public int getItemCount() {
-        if (listProductos.size() > 0){
-            return listProductos.size();
-        }
-        return 0;
+        return Math.max(listProductos.size(), 0);
     }
 
     //Referencia a item_list.xml
@@ -104,8 +97,8 @@ public class RecyclerProductAdapter extends RecyclerView.Adapter<RecyclerProduct
 
         @Override
         public void onClick(View v) {
-            Intent intent = new Intent(mContext, DetailProductView.class);
-            mContext.startActivity(intent);
+            Intent intent = new Intent(v.getContext(), DetailProductView.class);
+            v.getContext().startActivity(intent);
         }
     }
 }

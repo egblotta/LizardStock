@@ -53,11 +53,11 @@ public class AddProductInteractor implements IAddProduct.Interactor {
 
                         Uri downloadLink = task.getResult();
                         Map<String,Object> product = new HashMap<>();
+
                         product.put("nombre",nombre);
                         product.put("cantidad",cantidad);
                         product.put("codigo",codigo);
                         product.put("precio",precio);
-                        product.put("categoria",categoria);
 
                         assert downloadLink != null;
                         product.put("imagenUrl", downloadLink.toString());

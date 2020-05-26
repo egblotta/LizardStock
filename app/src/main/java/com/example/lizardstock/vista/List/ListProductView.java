@@ -20,9 +20,7 @@ import com.example.lizardstock.presentador.ListPresenter;
 
 public class ListProductView extends Fragment implements IListProduct.View {
 
-    private IListProduct.Presenter presenter;
     private Spinner spnCategoria;
-
 
     @Override
     public View onCreateView(
@@ -38,7 +36,6 @@ public class ListProductView extends Fragment implements IListProduct.View {
 
         ImageView imagenSc = view.findViewById(R.id.imagen_sinconexion);
         imagenSc.setVisibility(View.INVISIBLE);
-        presenter = new ListPresenter(this,getContext());
 
         spnCategoria.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -53,10 +50,10 @@ public class ListProductView extends Fragment implements IListProduct.View {
         return view;
     }
 
-
-    private void initRecycler(View view, String categoria) {
+    private void initRecycler(View v, String categoria) {
         try {
-            RecyclerView mRecyclerView = view.findViewById(R.id.recyclerProducts);
+            IListProduct.Presenter presenter = new ListPresenter(this);
+            RecyclerView mRecyclerView = v.findViewById(R.id.recyclerProducts);
             mRecyclerView.setHasFixedSize(true);
             LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
             mRecyclerView.setLayoutManager(layoutManager);
@@ -66,9 +63,4 @@ public class ListProductView extends Fragment implements IListProduct.View {
         }
     }
 
-    @Override
-    public void addSuccess(boolean success) {
-            if(success)
-                Toast.makeText(getContext(), "Lista cargada.", Toast.LENGTH_SHORT).show();
-    }
 }
