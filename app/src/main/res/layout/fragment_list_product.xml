@@ -32,7 +32,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginStart="10dp"
-            android:text="Grilla"
+            android:text="Lista"
             android:checked="false"/>
 
         <Spinner

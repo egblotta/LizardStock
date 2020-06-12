@@ -67,12 +67,8 @@ public class ListProductView extends Fragment implements IListProduct.View{
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if(isChecked){
                     Utilidades.visualizacion=Utilidades.LIST;
-                    mSwitch.setText("Lista");
-                    Toast.makeText(getContext(), "Lista", Toast.LENGTH_SHORT).show();
                 }else{
                     Utilidades.visualizacion=Utilidades.GRID;
-                    mSwitch.setText("Grilla");
-                    Toast.makeText(getContext(), "Grilla ", Toast.LENGTH_SHORT).show();
                 }
                 optionSpinner(view);
             }
