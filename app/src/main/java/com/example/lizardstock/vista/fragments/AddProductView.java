@@ -69,18 +69,7 @@ public class AddProductView extends Fragment implements View.OnClickListener, IA
                 openFileChooser();
                 break;
             case R.id.btnAdd:
-                try {
-                    if(TextUtils.isEmpty(etNombre.getText().toString())){
-                        Toast.makeText(getContext(), "El campo nombre no puede estar vacio", Toast.LENGTH_SHORT).show();
-                    }else{
-                        addProduct();
-                        cleanFields();
-                    }
-
-                }catch (Exception e){
-                    cleanFields();
-                    e.getMessage();
-                }
+                addProduct();
                 break;
         }
     }
@@ -100,7 +89,18 @@ public class AddProductView extends Fragment implements View.OnClickListener, IA
         String codigo = etCodigo.getText().toString().trim();
         String precio = etPrecio.getText().toString().trim();
         String categoria = spnCategoria.getSelectedItem().toString().trim();
-        presenter.firebaseUpload(categoria, nombre, cantidad, codigo, precio, imageUri);
+
+        if(!TextUtils.isEmpty(etNombre.getText().toString())
+                && !TextUtils.isEmpty(etCodigo.getText().toString())
+                && !TextUtils.isEmpty(etPrecio.getText().toString())
+                && !TextUtils.isEmpty(etCantidad.getText().toString())){
+            presenter.firebaseUpload(categoria, nombre, cantidad, codigo, precio, imageUri);
+            cleanFields();
+        }else{
+            Toast.makeText(getContext(), "Ningun campo puede estar vacio.", Toast.LENGTH_SHORT).show();
+            progressAdd.setVisibility(View.GONE);
+        }
+
     }
 
     //Devuelve el nombre de la imagen
@@ -145,12 +145,6 @@ public class AddProductView extends Fragment implements View.OnClickListener, IA
             if(success)
                 Toast.makeText(getContext(), "Articulo cargado.", Toast.LENGTH_SHORT).show();
             progressAdd.setVisibility(View.GONE);
-        }
-
-        public void checkEmptyField() {
-            if (TextUtils.isEmpty(etNombre.getText().toString())) {
-                Toast.makeText(getContext(), "El campo nombre no puede estar vacio", Toast.LENGTH_SHORT).show();
-            }
         }
 
 }

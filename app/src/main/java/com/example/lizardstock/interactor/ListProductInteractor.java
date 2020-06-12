@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.lizardstock.R;
@@ -19,6 +20,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -41,8 +43,10 @@ public class ListProductInteractor implements IListProduct.Interactor{
 
     @Override
     public void fillRecyclerView(final RecyclerView recyclerView, final String categoria) {
+
         mDatabase = mDatabase.child("Articulos").child(categoria);
         mDatabase.addValueEventListener(new ValueEventListener() {
+
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
@@ -53,20 +57,25 @@ public class ListProductInteractor implements IListProduct.Interactor{
                         Product product = postSnapshot.getValue(Product.class);
                         mProducts.add(product);
                     }
+
                     mAdapter = new RecyclerProductAdapter(mProducts);
                     mAdapter.setOnLongClickListener(new View.OnLongClickListener() {
+
                         @Override
                         public boolean onLongClick(final View v) {
                             AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
-                            builder.setTitle("Elimar articulo?");
+                            builder.setTitle("Eliminar articulo?");
                             final DialogInterface.OnClickListener dialogListener = new DialogInterface.OnClickListener() {
+
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
                                     switch (which){
+
                                         case DialogInterface.BUTTON_POSITIVE:
-                                            deleteItem(categoria, mProducts.get(recyclerView.getChildAdapterPosition(v)).getNombre());
+                                            deleteItem(mProducts.get(recyclerView.getChildAdapterPosition(v)).getNombre());
                                             mAdapter.notifyDataSetChanged();
                                             break;
+
                                             case DialogInterface.BUTTON_NEGATIVE:
                                                 dialog.dismiss();
                                                 break;
@@ -90,20 +99,7 @@ public class ListProductInteractor implements IListProduct.Interactor{
         });
     }
 
-    private void deleteItem(final String categoria, final String nombre){
-        DatabaseReference mReff = mDatabase.child("Articulos").child(categoria).child(nombre);
-        mReff.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for (DataSnapshot ds: dataSnapshot.getChildren()) {
-                    ds.getRef().removeValue();
-                    presenter.successMessage(true);
-                }
-            }
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                presenter.successMessage(false);
-            }
-        });
+    private void deleteItem(String nombre){
+        mDatabase.child(nombre).removeValue();
     }
 }
