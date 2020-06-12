@@ -35,7 +35,7 @@ public class AddProductInteractor implements IAddProduct.Interactor {
                                final String codigo, final String precio, final Uri imagenUri){
 
         if(imagenUri!=null){
-            final StorageReference imageRef = mStorage.child(categoria).child(codigo.trim());
+            final StorageReference imageRef = mStorage.child(categoria).child(nombre);
             imageRef.putFile(imagenUri).continueWithTask(   new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
 
                 @Override

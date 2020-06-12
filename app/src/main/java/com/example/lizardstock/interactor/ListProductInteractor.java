@@ -26,12 +26,15 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
 
 public class ListProductInteractor implements IListProduct.Interactor{
 
     private DatabaseReference mDatabase;
+    private StorageReference mStorage;
     private RecyclerProductAdapter mAdapter;
     private IListProduct.Presenter presenter;
 
@@ -39,6 +42,7 @@ public class ListProductInteractor implements IListProduct.Interactor{
     public ListProductInteractor(IListProduct.Presenter presenter) {
         this.presenter = presenter;
         mDatabase=FirebaseDatabase.getInstance().getReference();
+        mStorage = FirebaseStorage.getInstance().getReference();
     }
 
     @Override
@@ -72,7 +76,7 @@ public class ListProductInteractor implements IListProduct.Interactor{
                                     switch (which){
 
                                         case DialogInterface.BUTTON_POSITIVE:
-                                            deleteItem(mProducts.get(recyclerView.getChildAdapterPosition(v)).getNombre());
+                                            deleteItem(categoria,mProducts.get(recyclerView.getChildAdapterPosition(v)).getNombre());
                                             mAdapter.notifyDataSetChanged();
                                             break;
 
@@ -99,7 +103,9 @@ public class ListProductInteractor implements IListProduct.Interactor{
         });
     }
 
-    private void deleteItem(String nombre){
+    private void deleteItem(String categoria, String nombre){
+        StorageReference imageRef = mStorage.child(categoria).child(nombre);
+        imageRef.delete();
         mDatabase.child(nombre).removeValue();
     }
 }
