@@ -31,7 +31,7 @@
             android:textStyle="bold" />
 
         <ImageView
-            android:id="@+id/imgProducto"
+            android:id="@+id/imgProductoAdd"
             android:layout_width="300dp"
             android:layout_height="300dp"
             android:layout_gravity="center"
@@ -40,7 +40,7 @@
             android:src="@drawable/ic_image_black_24dp" />
 
         <EditText
-            android:id="@+id/etCodigo"
+            android:id="@+id/etCodigoAdd"
             android:layout_width="140dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -49,7 +49,7 @@
             android:textAlignment="center" />
 
         <EditText
-            android:id="@+id/etNombre"
+            android:id="@+id/etNombreAdd"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -62,7 +62,7 @@
             android:textAlignment="center" />
 
         <EditText
-            android:id="@+id/etCantidad"
+            android:id="@+id/etCantidadAdd"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -73,7 +73,7 @@
             android:textAlignment="center" />
 
         <EditText
-            android:id="@+id/etPrecio"
+            android:id="@+id/etPrecioAdd"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -84,7 +84,7 @@
             android:textAlignment="center" />
 
         <Spinner
-            android:id="@+id/spnCategoria"
+            android:id="@+id/spnCategoriaAdd"
             android:layout_width="300dp"
             android:layout_height="40dp"
             android:layout_gravity="center"

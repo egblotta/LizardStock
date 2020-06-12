@@ -23,29 +23,34 @@ import com.example.lizardstock.interfaces.IListProduct;
 import com.example.lizardstock.presentador.ListPresenter;
 import com.example.lizardstock.utilidades.Utilidades;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class ListProductView extends Fragment implements IListProduct.View{
 
-    private Spinner spnCategoria;
-    private Switch mSwitch;
+    @BindView(R.id.spnLista)
+    Spinner spnLista;
+    @BindView(R.id.swLista)
+    Switch mSwitch;
+    @BindView(R.id.imgSinConexion)
+    ImageView imagenSc;
 
     @Override
     public View onCreateView(
             LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_list_product, container, false);
-
-        mSwitch = view.findViewById(R.id.swLista);
-        spnCategoria = view.findViewById(R.id.spnLista);
+        ButterKnife.bind(this, view);
 
         ArrayAdapter<CharSequence> spnAdapter = ArrayAdapter.createFromResource(requireContext(),
                 R.array.categorias, android.R.layout.simple_spinner_item);
         spnAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spnCategoria.setAdapter(spnAdapter);
+        spnLista.setAdapter(spnAdapter);
 
-        ImageView imagenSc = view.findViewById(R.id.imagen_sinconexion);
         imagenSc.setVisibility(View.INVISIBLE);
 
         switchOn(view);
         optionSpinner(view);
+
         return view;
     }
 
@@ -62,20 +67,20 @@ public class ListProductView extends Fragment implements IListProduct.View{
                     mSwitch.setText("Grilla");
                     Toast.makeText(getContext(), "Grilla ", Toast.LENGTH_SHORT).show();
                 }
-                //optionSpinner(view);
+                optionSpinner(view);
             }
         });
     }
 
     private void optionSpinner(final View view){
-        spnCategoria.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        spnLista.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View v, int position, long id) {
-                initRecycler(view,spnCategoria.getSelectedItem().toString());
+                initRecycler(view,spnLista.getSelectedItem().toString());
             }
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-
+                //
             }
         });
     }
@@ -94,7 +99,6 @@ public class ListProductView extends Fragment implements IListProduct.View{
         }
         presenter.fillRecyclerView(mRecyclerView, categoria);
     }
-
 
     @Override
     public void successMessage(Boolean success) {

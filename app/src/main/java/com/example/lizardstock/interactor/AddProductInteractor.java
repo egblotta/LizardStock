@@ -31,8 +31,8 @@ public class AddProductInteractor implements IAddProduct.Interactor {
         mStorage = FirebaseStorage.getInstance().getReference();
     }
 
-    public void firebaseUpload(final String categoria, final String nombre, final String cantidad,
-                               final String codigo, final String precio, final Uri imagenUri){
+    public void firebaseUpload(final String codigo, final String nombre, final String cantidad,
+                                final String precio, final String categoria, final Uri imagenUri){
 
         if(imagenUri!=null){
             final StorageReference imageRef = mStorage.child(categoria).child(nombre);
