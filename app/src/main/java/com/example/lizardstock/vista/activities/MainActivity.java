@@ -18,7 +18,11 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import static android.view.View.GONE;
+
 public class MainActivity extends AppCompatActivity {
+
+    FloatingActionButton fab;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,15 +31,8 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-
-            //Para ir desde el fab al segundo fragment
-            @Override
-            public void onClick(View view) {
-                fabClick();
-            }
-        });
+        fab = findViewById(R.id.fab);
+        fab.setOnClickListener(view -> fabClick());
     }
 
     @Override
@@ -59,6 +56,17 @@ public class MainActivity extends AppCompatActivity {
         assert navHost != null;
         NavController nav = NavHostFragment.findNavController(navHost);
         nav.navigate(R.id.addProduct);
+        fabHide();
+    }
+
+    public FloatingActionButton getFab(){
+        return fab;
+    }
+    public void fabShow(){
+        fab.show();
+    }
+    public void fabHide(){
+        fab.hide();
     }
 
 }

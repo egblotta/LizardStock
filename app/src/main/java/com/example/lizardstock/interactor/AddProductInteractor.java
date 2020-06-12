@@ -36,47 +36,39 @@ public class AddProductInteractor implements IAddProduct.Interactor {
 
         if(imagenUri!=null){
             final StorageReference imageRef = mStorage.child(categoria).child(nombre);
-            imageRef.putFile(imagenUri).continueWithTask(   new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
-
-                @Override
-                public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
-                    if(!task.isSuccessful()){
-                        throw new Exception();
-                    }
-                    return imageRef.getDownloadUrl();
+            imageRef.putFile(imagenUri).continueWithTask(task -> {
+                if(!task.isSuccessful()){
+                    throw new Exception();
                 }
-            }).addOnCompleteListener(new OnCompleteListener<Uri>() {
+                return imageRef.getDownloadUrl();
+            }).addOnCompleteListener(task -> {
+                if(task.isSuccessful()){
 
-                @Override
-                public void onComplete(@NonNull Task<Uri> task) {
-                    if(task.isSuccessful()){
+                    Uri downloadLink = task.getResult();
+                    Map<String,Object> product = new HashMap<>();
 
-                        Uri downloadLink = task.getResult();
-                        Map<String,Object> product = new HashMap<>();
+                    product.put("nombre",nombre);
+                    product.put("cantidad",cantidad);
+                    product.put("codigo",codigo);
+                    product.put("precio",precio);
 
-                        product.put("nombre",nombre);
-                        product.put("cantidad",cantidad);
-                        product.put("codigo",codigo);
-                        product.put("precio",precio);
+                    assert downloadLink != null;
+                    product.put("imagenUrl", downloadLink.toString());
 
-                        assert downloadLink != null;
-                        product.put("imagenUrl", downloadLink.toString());
+                    DatabaseReference postRef = mDatabase.child("Articulos").child(categoria).child(nombre);
+                    postRef.updateChildren(product).addOnCompleteListener(new OnCompleteListener<Void>() {
 
-                        DatabaseReference postRef = mDatabase.child("Articulos").child(categoria).child(nombre);
-                        postRef.updateChildren(product).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                          presenter.addSuccess(true);
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
 
-                            @Override
-                            public void onComplete(@NonNull Task<Void> task) {
-                              presenter.addSuccess(true);
-                            }
-                        }).addOnFailureListener(new OnFailureListener() {
-
-                            @Override
-                            public void onFailure(@NonNull Exception e) {
-                                presenter.addSuccess(false);
-                            }
-                        });
-                    }
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            presenter.addSuccess(false);
+                        }
+                    });
                 }
             });
         }

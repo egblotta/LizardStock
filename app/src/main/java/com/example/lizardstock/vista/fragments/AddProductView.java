@@ -139,7 +139,6 @@ public class AddProductView extends Fragment implements View.OnClickListener, IA
             Toast.makeText(getContext(), "Ningun campo puede estar vacio.", Toast.LENGTH_SHORT).show();
             progressAdd.setVisibility(View.GONE);
         }
-
     }
 
     @Override

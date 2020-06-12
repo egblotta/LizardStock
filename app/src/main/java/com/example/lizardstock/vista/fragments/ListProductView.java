@@ -22,6 +22,10 @@ import com.example.lizardstock.R;
 import com.example.lizardstock.interfaces.IListProduct;
 import com.example.lizardstock.presentador.ListPresenter;
 import com.example.lizardstock.utilidades.Utilidades;
+import com.example.lizardstock.vista.activities.MainActivity;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -48,9 +52,12 @@ public class ListProductView extends Fragment implements IListProduct.View{
 
         imagenSc.setVisibility(View.INVISIBLE);
 
+        final FloatingActionButton fab = ((MainActivity) requireActivity()).getFab();
+        if(fab!=null){
+            ((MainActivity) requireActivity()).fabShow();
+        }
         switchOn(view);
         optionSpinner(view);
-
         return view;
     }
 
