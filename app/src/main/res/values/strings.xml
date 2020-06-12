@@ -24,4 +24,7 @@
     <string name="actualizar_art">Modificar</string>
     <string name="eliminar_art">Eliminar</string>
     <string name="subir_imagen">Subir Imagen</string>
+    <string name="Si">SI</string>
+    <string name="No">NO</string>
+
 </resources>

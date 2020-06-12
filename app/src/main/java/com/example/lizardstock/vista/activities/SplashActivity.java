@@ -1,4 +1,4 @@
-package com.example.lizardstock.vista;
+package com.example.lizardstock.vista.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 

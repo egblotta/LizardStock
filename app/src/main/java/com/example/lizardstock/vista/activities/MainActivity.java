@@ -1,8 +1,10 @@
-package com.example.lizardstock.vista;
+package com.example.lizardstock.vista.activities;
 
 import android.os.Bundle;
 
 import com.example.lizardstock.R;
+import com.example.lizardstock.interfaces.IListProduct;
+import com.example.lizardstock.utilidades.Utilidades;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -14,6 +16,7 @@ import androidx.navigation.fragment.NavHostFragment;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -44,13 +47,8 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if(id==item.getItemId()){
             return true;
         }
         return super.onOptionsItemSelected(item);

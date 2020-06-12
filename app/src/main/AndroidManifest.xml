@@ -15,10 +15,10 @@
         android:theme="@style/AppTheme">
 
         <activity
-            android:name=".vista.Detail.DetailProductView"
+            android:name=".vista.activities.DetailProductView"
             android:label="@string/app_name">
         </activity>
-        <activity android:name=".vista.SplashActivity">
+        <activity android:name=".vista.activities.SplashActivity">
 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -27,7 +27,7 @@
 
         </activity>
         <activity
-            android:name=".vista.MainActivity"
+            android:name=".vista.activities.MainActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>

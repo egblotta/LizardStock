@@ -1,4 +1,4 @@
-package com.example.lizardstock.vista.Add;
+package com.example.lizardstock.vista.fragments;
 
 import android.app.Activity;
 import android.content.Context;
@@ -7,6 +7,7 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.OpenableColumns;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -69,8 +70,13 @@ public class AddProductView extends Fragment implements View.OnClickListener, IA
                 break;
             case R.id.btnAdd:
                 try {
-                    addProduct();
-                    cleanFields();
+                    if(TextUtils.isEmpty(etNombre.getText().toString())){
+                        Toast.makeText(getContext(), "El campo nombre no puede estar vacio", Toast.LENGTH_SHORT).show();
+                    }else{
+                        addProduct();
+                        cleanFields();
+                    }
+
                 }catch (Exception e){
                     cleanFields();
                     e.getMessage();
@@ -140,4 +146,11 @@ public class AddProductView extends Fragment implements View.OnClickListener, IA
                 Toast.makeText(getContext(), "Articulo cargado.", Toast.LENGTH_SHORT).show();
             progressAdd.setVisibility(View.GONE);
         }
+
+        public void checkEmptyField() {
+            if (TextUtils.isEmpty(etNombre.getText().toString())) {
+                Toast.makeText(getContext(), "El campo nombre no puede estar vacio", Toast.LENGTH_SHORT).show();
+            }
+        }
+
 }
