@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/FirstFragment"
-        android:name="com.example.lizardstock.vista.fragments.ListProductView"
+        android:name="com.example.lizardstock.vista.fragments.ListFragmentView"
         android:label="@string/first_fragment_label"
         tools:layout="@layout/fragment_list_product">
         <action
@@ -17,10 +17,13 @@
             android:id="@+id/action_FirstFragment_to_addProduct2"
             app:destination="@id/addProduct"
             app:launchSingleTop="false" />
+        <action
+            android:id="@+id/action_FirstFragment_to_detailFragment"
+            app:destination="@id/detailFragment" />
     </fragment>
     <fragment
         android:id="@+id/addProduct"
-        android:name="com.example.lizardstock.vista.fragments.AddProductView"
+        android:name="com.example.lizardstock.vista.fragments.AddFragmentView"
         android:label="fragment_add_product"
         tools:layout="@layout/fragment_add_product" >
         <action
@@ -28,4 +31,9 @@
             app:popUpTo="@id/addProduct"
             app:popUpToInclusive="true" />
     </fragment>
+    <fragment
+        android:id="@+id/detailFragment"
+        android:name="com.example.lizardstock.vista.fragments.DetailFragment"
+        android:label="fragment_detail"
+        tools:layout="@layout/fragment_detail" />
 </navigation>

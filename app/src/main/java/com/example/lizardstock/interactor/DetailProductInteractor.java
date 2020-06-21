@@ -2,20 +2,12 @@ package com.example.lizardstock.interactor;
 
 import android.net.Uri;
 
-import androidx.annotation.NonNull;
-
 import com.example.lizardstock.interfaces.IDetailProduct;
-import com.google.android.gms.tasks.Continuation;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.UploadTask;
 
-import java.util.EventListener;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -32,69 +24,36 @@ public class DetailProductInteractor implements IDetailProduct.Interactor {
     }
 
     @Override
-    public void firebaseUpdate(final String categoria, final String nombre, final String cantidad,
-                               final String codigo, final String precio, final Uri imagenUri) {
-        if(imagenUri!=null){
-            final StorageReference imageRef = mStorage.child(categoria).child(codigo.trim());
-            imageRef.putFile(imagenUri).continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
+    public void firebaseUpdate(final String codigo, final String nombre, final String cantidad,
+                               final String precio, final String categoria, final Uri imagenUri) {
+        if (imagenUri != null) {
+            final StorageReference imageRef = mStorage.child(categoria).child(nombre);
+            imageRef.putFile(imagenUri).continueWithTask(task -> {
 
-                @Override
-                public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
-                    if(!task.isSuccessful()){
-                        throw new Exception();
-                    }
-                    return imageRef.getDownloadUrl();
+                if (!task.isSuccessful()) {
+                    throw new Exception();
                 }
-            }).addOnCompleteListener(new OnCompleteListener<Uri>() {
+                return imageRef.getDownloadUrl();
+            }).addOnCompleteListener(task -> {
 
-                @Override
-                public void onComplete(@NonNull Task<Uri> task) {
-                    if(task.isSuccessful()){
+                if (task.isSuccessful()) {
 
-                        Uri downloadLink = task.getResult();
-                        Map<String,Object> product = new HashMap<>();
+                    Uri downloadLink = task.getResult();
+                    Map<String, Object> product = new HashMap<>();
 
-                        product.put("nombre",nombre);
-                        product.put("cantidad",cantidad);
-                        product.put("codigo",codigo);
-                        product.put("precio",precio);
+                    product.put("nombre", nombre);
+                    product.put("cantidad", cantidad);
+                    product.put("codigo", codigo);
+                    product.put("precio", precio);
+                    assert downloadLink != null;
+                    product.put("imagenUrl", downloadLink.toString());
 
-                        assert downloadLink != null;
-                        product.put("imagenUrl", downloadLink.toString());
-                        DatabaseReference postRef = mDatabase.child("Articulos").child(categoria).child(nombre);
-                        postRef.updateChildren(product).addOnCompleteListener(new OnCompleteListener<Void>() {
-
-                            @Override
-                            public void onComplete(@NonNull Task<Void> task) {
-                                presenter.addSuccess(true);
-                            }
-                        }).addOnFailureListener(new OnFailureListener() {
-
-                            @Override
-                            public void onFailure(@NonNull Exception e) {
-                                presenter.addSuccess(false);
-                            }
-                        });
-                    }
+                    DatabaseReference postRef = mDatabase.child("Articulos").child(categoria).child(nombre);
+                    postRef.updateChildren(product)
+                            .addOnSuccessListener(task1 -> presenter.successMessage(true))        //true
+                            .addOnFailureListener(e -> presenter.successMessage(false));           //false
                 }
             });
         }
-    }
-
-    @Override
-    public void firebaseDelete(final String nombre, final String categoria) {
-
-    mDatabase.child(categoria).child(nombre).removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
-        @Override
-        public void onComplete(@NonNull Task<Void> task) {
-            presenter.addSuccess(true);
-        }
-    }).addOnFailureListener(new OnFailureListener() {
-        @Override
-        public void onFailure(@NonNull Exception e) {
-            presenter.addSuccess(false);
-        }
-    });
-
     }
 }

@@ -3,8 +3,6 @@ package com.example.lizardstock.vista.activities;
 import android.os.Bundle;
 
 import com.example.lizardstock.R;
-import com.example.lizardstock.interfaces.IListProduct;
-import com.example.lizardstock.utilidades.Utilidades;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import androidx.appcompat.app.AppCompatActivity;

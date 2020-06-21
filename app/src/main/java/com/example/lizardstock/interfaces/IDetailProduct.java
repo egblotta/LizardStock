@@ -2,22 +2,21 @@ package com.example.lizardstock.interfaces;
 
 import android.net.Uri;
 
-public interface IDetailProduct{
+public interface IDetailProduct {
 
     interface View{
-        void addSuccess(boolean success);
+        void successMessage(Boolean success);
     }
 
     interface Presenter{
-        void addSuccess(boolean success);
-        void firebaseUpdate(final String categoria, final String nombre, final String cantidad, final String codigo,
-                            final String precio, final Uri imagenUri);
-        void firebaseDelete(final String nombre, final String categoria);
+        void successMessage(Boolean success);
+        void firebaseUpdate(final String codigo, final String nombre, final String cantidad,
+                            final String precio, final String categoria, final Uri imagenUri);
     }
 
     interface Interactor{
-        void firebaseUpdate(final String categoria, final String nombre, final String cantidad, final String codigo,
-                            final String precio, final Uri imagenUri);
-        void firebaseDelete(final String nombre, final String categoria);
+        void firebaseUpdate(final String codigo, final String nombre, final String cantidad,
+                            final String precio, final String categoria, final Uri imagenUri);
     }
+
 }

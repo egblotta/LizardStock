@@ -1,6 +1,5 @@
 package com.example.lizardstock.adaptador;
 
-import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,17 +19,17 @@ import com.bumptech.glide.load.engine.GlideException;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
 import com.example.lizardstock.R;
-import com.example.lizardstock.interfaces.IListProduct;
 import com.example.lizardstock.modelo.Product;
 import com.example.lizardstock.utilidades.Utilidades;
-import com.example.lizardstock.vista.activities.DetailProductView;
 
 import java.util.List;
 
-public class RecyclerProductAdapter extends RecyclerView.Adapter<RecyclerProductAdapter.viewHolder> implements View.OnClickListener, View.OnLongClickListener {
+public class RecyclerProductAdapter extends RecyclerView.Adapter<RecyclerProductAdapter.viewHolder>
+        implements View.OnClickListener, View.OnLongClickListener {
+
 
     private List<Product> listProductos;
-    private View.OnClickListener listener;
+    private View.OnClickListener onClickListener;
     private View.OnLongClickListener onLongClickListener;
 
     public RecyclerProductAdapter(List<Product> listProductos) {
@@ -47,9 +46,8 @@ public class RecyclerProductAdapter extends RecyclerView.Adapter<RecyclerProduct
         }else{
             layout=R.layout.item_grid;
         }
-
         View view = LayoutInflater.from(viewGroup.getContext()).inflate(layout,null,false);
-        view.setOnClickListener(listener);
+        view.setOnClickListener(onClickListener);
         view.setOnLongClickListener(onLongClickListener);
         return new viewHolder(view);
     }
@@ -70,7 +68,6 @@ public class RecyclerProductAdapter extends RecyclerView.Adapter<RecyclerProduct
                     Toast.makeText(holder.imgArticulo.getContext(), npe.getMessage(), Toast.LENGTH_SHORT).show();
                 }
             }
-
         }
         //Carga la imagen en el imageView usando Glide
         Glide.with(holder.itemView.getContext())
@@ -95,8 +92,8 @@ public class RecyclerProductAdapter extends RecyclerView.Adapter<RecyclerProduct
     @Override
     public int getItemCount() {return Math.max(listProductos.size(), 0);}
 
-    public void setOnClickListener(View.OnClickListener listener){
-        this.listener = listener;
+    public void setOnClickListener(View.OnClickListener onClickListener){
+        this.onClickListener = onClickListener;
     }
 
     public void setOnLongClickListener(View.OnLongClickListener onLongClickListener){
@@ -105,8 +102,8 @@ public class RecyclerProductAdapter extends RecyclerView.Adapter<RecyclerProduct
 
     @Override
     public void onClick(View v) {
-        if(listener!=null){
-            listener.onClick(v);
+        if(onClickListener!=null){
+            onClickListener.onClick(v);
         }
     }
 

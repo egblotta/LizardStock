@@ -32,20 +32,16 @@ import butterknife.BindView;
 import butterknife.BindViews;
 import butterknife.ButterKnife;
 
-public class AddProductView extends Fragment implements View.OnClickListener, IAddProduct.View {
+public class AddFragmentView extends Fragment implements View.OnClickListener, IAddProduct.View {
 
     @BindViews({R.id.etCodigoAdd,R.id.etNombreAdd,R.id.etCantidadAdd,R.id.etPrecioAdd})
     List<EditText> etViews;
-
     @BindView(R.id.btnAdd)
     Button btnNuevo;
-
     @BindView(R.id.imgProductoAdd)
     ImageView imgProducto;
-
     @BindView(R.id.spnCategoriaAdd)
     Spinner spnCategoria;
-
     @BindView(R.id.progressAdd)
     ProgressBar progressAdd;
 
@@ -66,6 +62,7 @@ public class AddProductView extends Fragment implements View.OnClickListener, IA
 
         btnNuevo.setOnClickListener(this);
         imgProducto.setOnClickListener(this);
+
         presenter = new AddPresenter(this);
 
         return view;
@@ -84,7 +81,7 @@ public class AddProductView extends Fragment implements View.OnClickListener, IA
     }
 
     //Abre la galeria del dispositivo
-    private void openFileChooser() {
+    public void openFileChooser() {
         Intent intent = new Intent(Intent.ACTION_PICK);
         intent.setType("image/*");      //solo los tipos "image" son seleccionados
         intent.setAction(Intent.ACTION_GET_CONTENT);
@@ -154,5 +151,10 @@ public class AddProductView extends Fragment implements View.OnClickListener, IA
         etViews.get(2).setText("");
         etViews.get(3).setText("");
         imgProducto.setImageResource(R.drawable.ic_image_black_24dp);
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
     }
 }

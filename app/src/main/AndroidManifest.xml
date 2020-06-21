@@ -14,10 +14,6 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <activity
-            android:name=".vista.activities.DetailProductView"
-            android:label="@string/app_name">
-        </activity>
         <activity android:name=".vista.activities.SplashActivity">
 
             <intent-filter>

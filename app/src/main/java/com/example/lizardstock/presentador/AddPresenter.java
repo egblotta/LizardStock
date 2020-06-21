@@ -23,9 +23,10 @@ public class AddPresenter implements IAddProduct.Presenter {
     }
 
     @Override
-    public void firebaseUpload(String categoria, String nombre, String cantidad, String codigo, String precio, Uri imagenUri) {
+    public void firebaseUpload(final String codigo, final String nombre, final String cantidad,
+                               final String precio, final String categoria, final Uri imagenUri) {
         if (view != null) {
-            interactor.firebaseUpload(categoria, nombre, cantidad, codigo, precio, imagenUri);
+            interactor.firebaseUpload(codigo, nombre, cantidad, precio, categoria, imagenUri);
         }
 
     }
