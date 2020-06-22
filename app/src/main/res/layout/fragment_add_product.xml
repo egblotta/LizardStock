@@ -46,46 +46,48 @@
             android:layout_gravity="center"
             android:hint="@string/cod_articulo"
             android:inputType="textCapCharacters"
-            android:textAlignment="center" />
+            android:textAlignment="center"
+            android:drawableStart="@drawable/ic_baseline_code_24"/>
 
         <EditText
             android:id="@+id/etNombreAdd"
-            android:layout_width="match_parent"
+            android:layout_width="450dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="10dp"
             android:layout_marginStart="10dp"
             android:layout_marginEnd="10dp"
-            android:ems="10"
             android:hint="@string/nombre_articulo"
             android:inputType="textPersonName"
-            android:textAlignment="center" />
+            android:textAlignment="center"
+            android:textSize="30sp"
+            android:drawableStart="@drawable/ic_baseline_font_download_24"/>
 
         <EditText
             android:id="@+id/etCantidadAdd"
-            android:layout_width="wrap_content"
+            android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="10dp"
-            android:ems="10"
-            android:hint="@string/cant_articulo"
             android:inputType="number"
-            android:textAlignment="center" />
+            android:textAlignment="center"
+            android:textSize="30sp"
+            android:drawableStart="@drawable/ic_baseline_receipt_24"/>
 
         <EditText
             android:id="@+id/etPrecioAdd"
-            android:layout_width="wrap_content"
+            android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="10dp"
-            android:ems="10"
-            android:hint="@string/precio_articulo"
             android:inputType="numberDecimal"
-            android:textAlignment="center" />
+            android:textAlignment="center"
+            android:textSize="30sp"
+            android:drawableStart="@drawable/ic_baseline_attach_money_24"/>
 
         <Spinner
             android:id="@+id/spnCategoriaAdd"
-            android:layout_width="300dp"
+            android:layout_width="200dp"
             android:layout_height="40dp"
             android:layout_gravity="center"
             android:layout_marginTop="10dp"
