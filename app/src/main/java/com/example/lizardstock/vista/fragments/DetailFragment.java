@@ -26,6 +26,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
@@ -48,16 +49,18 @@ import butterknife.ButterKnife;
 
 public class DetailFragment extends DialogFragment implements IDetailProduct.View, View.OnClickListener {
 
-    @BindViews({R.id.etCodigoUpd,R.id.etNombreUpd,R.id.etCantidadUpd,R.id.etPrecioUpd})
+    @BindViews({R.id.txtCodigoUpd,R.id.txtNombreUpd})
+    List<TextView> txtViews;
+    @BindViews({R.id.etCantidadUpd,R.id.etPrecioUpd})
     List<EditText> etViews;
     @BindView(R.id.btnUpdate)
     Button btnModificar;
     @BindView(R.id.imgProductoUpd)
     ImageView imgProductoUpd;
-    @BindView(R.id.spnCategoriaUpd)
-    Spinner spnCategoriaUpd;
     @BindView(R.id.progressUpd)
     ProgressBar progressBar;
+
+    private String categoria;
 
     private IDetailProduct.Presenter presenter;
     private Uri imageUri;
@@ -73,14 +76,7 @@ public class DetailFragment extends DialogFragment implements IDetailProduct.Vie
         View view = inflater.inflate(R.layout.fragment_detail, container, false);
         ButterKnife.bind(this, view);
 
-
-        ArrayAdapter<CharSequence> spnAdapter = ArrayAdapter.createFromResource(requireContext(),
-                R.array.categorias, android.R.layout.simple_spinner_item);
-        spnAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spnCategoriaUpd.setAdapter(spnAdapter);
-
         btnModificar.setOnClickListener(this);
-        imgProductoUpd.setOnClickListener(this);
         presenter = new DetailsPresenter(this);
 
         getData();
@@ -90,13 +86,8 @@ public class DetailFragment extends DialogFragment implements IDetailProduct.Vie
     @Override
     public void onClick(View v) {
 
-        switch (v.getId()) {
-            case R.id.imgProductoUpd:
-                openFileChooser();
-                break;
-            case R.id.btnUpdate:
-                sendData();
-                break;
+        if (v.getId() == R.id.btnUpdate) {
+            sendData();
         }
     }
 
@@ -105,12 +96,12 @@ public class DetailFragment extends DialogFragment implements IDetailProduct.Vie
         Bundle mArgs = getArguments();
 
         assert mArgs != null;
-        etViews.get(0).setText(mArgs.getString("codigo"));
-        etViews.get(1).setText(mArgs.getString("nombre"));
-        etViews.get(2).setText(mArgs.getString("cantidad"));
-        etViews.get(3).setText(mArgs.getString("precio"));
-
+        txtViews.get(0).setText(mArgs.getString("codigo"));
+        txtViews.get(1).setText(mArgs.getString("nombre"));
+        etViews.get(0).setText(mArgs.getString("cantidad"));
+        etViews.get(1).setText(mArgs.getString("precio"));
         imageUri = Uri.parse(mArgs.getString("imagen"));
+        categoria = mArgs.getString("categoria");
 
         //Carga la imagen en el imageView usando Glide
         Glide.with(requireContext())
@@ -132,59 +123,18 @@ public class DetailFragment extends DialogFragment implements IDetailProduct.Vie
                 }).into(imgProductoUpd);
     }
 
-    //Abre la galeria del dispositivo
-    public void openFileChooser() {
-        Intent intent = new Intent(Intent.ACTION_PICK);
-        intent.setType("image/*");      //solo los tipos "image" son seleccionados
-        intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(intent,PICK_IMAGE_REQUEST);
-    }
-
-    //Muestra la imagen seleccionada en el imgView y setea el nombre de la imagen al campo codigo
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if (requestCode == PICK_IMAGE_REQUEST && resultCode == Activity.RESULT_OK && data != null && data.getData()  != null){
-            imageUri = data.getData();
-            try {
-                //imgProductoUpd.setImageURI(imageUri);
-                etViews.get(0).setText(getImageName(getContext(), imageUri));
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
-    //Devuelve el nombre de la imagen
-    private String getImageName(Context context, Uri uri){
-        String fileName = null;
-        try (Cursor cursor = context.getContentResolver()
-                .query(uri, null, null, null, null, null)) {
-            if (cursor != null && cursor.moveToFirst()) {
-                // get file name
-                fileName = cursor.getString(cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME));
-                fileName = fileName.substring(0, fileName.length()-4);      //elimino los ultimos 4 caracteres del String
-            }
-        }
-        return fileName;
-    }
-
     private void sendData() {
         progressBar.setVisibility(View.VISIBLE);
-        String codigo = etViews.get(0).getText().toString().trim();
-        String nombre = etViews.get(1).getText().toString().trim();
-        String cantidad = etViews.get(2).getText().toString().trim();
-        String precio = etViews.get(3).getText().toString().trim();
-        String categoria = spnCategoriaUpd.getSelectedItem().toString().trim();
+        String codigo = txtViews.get(0).getText().toString().trim();
+        String nombre = txtViews.get(1).getText().toString().trim();
+        String cantidad = etViews.get(0).getText().toString().trim();
+        String precio = etViews.get(1).getText().toString().trim();
 
         if(!TextUtils.isEmpty(etViews.get(0).getText().toString())
-                && !TextUtils.isEmpty(etViews.get(1).getText().toString())
-                && !TextUtils.isEmpty(etViews.get(2).getText().toString())
-                && !TextUtils.isEmpty(etViews.get(3).getText().toString())){
-            presenter.firebaseUpdate(codigo, nombre, cantidad, precio, categoria, imageUri);
+                && !TextUtils.isEmpty(etViews.get(1).getText().toString())){
+            presenter.firebaseUpdate(codigo, nombre, cantidad, precio, categoria);
         }else{
-            Toast.makeText(getContext(), "Ningun campo puede estar vacio.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), "Los campos no pueden estar vacio.", Toast.LENGTH_SHORT).show();
             progressBar.setVisibility(View.GONE);
         }
     }

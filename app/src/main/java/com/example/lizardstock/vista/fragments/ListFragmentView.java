@@ -159,18 +159,18 @@ public class ListFragmentView extends Fragment implements IListProduct.View{
 
         String codigo = mProducts.get(recyclerView.getChildAdapterPosition(v)).getCodigo();
         String nombre = mProducts.get(recyclerView.getChildAdapterPosition(v)).getNombre();
-        String categoria = mProducts.get(recyclerView.getChildAdapterPosition(v)).getCategoria();
         String cantidad = mProducts.get(recyclerView.getChildAdapterPosition(v)).getCantidad();
         String precio = mProducts.get(recyclerView.getChildAdapterPosition(v)).getPrecio();
-        String img = mProducts.get(recyclerView.getChildAdapterPosition(v)).getImagenUrl();
+        String categoria = mProducts.get(recyclerView.getChildAdapterPosition(v)).getCategoria();
+        String imagen = mProducts.get(recyclerView.getChildAdapterPosition(v)).getImagenUrl();
 
         Bundle args = new Bundle();
         args.putString("codigo",codigo);
         args.putString("nombre",nombre);
         args.putString("cantidad",cantidad);
         args.putString("precio",precio);
-        args.putString("imagen",img);
         args.putString("categoria",categoria);
+        args.putString("imagen",imagen);
 
         DialogFragment dialog = new DetailFragment();
         dialog.setArguments(args);

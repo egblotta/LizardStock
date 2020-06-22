@@ -11,12 +11,12 @@ public interface IDetailProduct {
     interface Presenter{
         void successMessage(Boolean success);
         void firebaseUpdate(final String codigo, final String nombre, final String cantidad,
-                            final String precio, final String categoria, final Uri imagenUri);
+                            final String precio, final String categoria);
     }
 
     interface Interactor{
         void firebaseUpdate(final String codigo, final String nombre, final String cantidad,
-                            final String precio, final String categoria, final Uri imagenUri);
+                            final String precio, final String categoria);
     }
 
 }

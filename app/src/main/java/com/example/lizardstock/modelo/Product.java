@@ -9,7 +9,8 @@ public class Product {
     private String precio;
     private String imagenUrl;
 
-    public Product(String categoria, String codigo, String nombre, String cantidad, String precio, String imagenUrl) {
+    public Product(String categoria, String codigo, String nombre, String cantidad, String precio,
+                   String imagenUrl) {
         this.categoria = categoria;
         this.codigo = codigo;
         this.nombre = nombre;

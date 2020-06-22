@@ -58,7 +58,7 @@ public class ListPresenter implements IListProduct.Presenter {
     @Override
     public void successMessage(Boolean success) {
         if (view != null) {
-            view.errorMessage(success);
+            view.successMessage(success);
         }
     }
 

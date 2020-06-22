@@ -17,6 +17,7 @@ import com.google.firebase.storage.UploadTask;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 public class AddProductInteractor implements IAddProduct.Interactor {
 
@@ -32,34 +33,42 @@ public class AddProductInteractor implements IAddProduct.Interactor {
     }
 
     public void firebaseUpload(final String codigo, final String nombre, final String cantidad,
-                                final String precio, final String categoria, final Uri imagenUri){
-        if(imagenUri!=null){
-            final StorageReference imageRef = mStorage.child(categoria).child(nombre);
-            imageRef.putFile(imagenUri).continueWithTask(task -> {
-                if(!task.isSuccessful()){
-                    throw new Exception();
-                }
-                return imageRef.getDownloadUrl();
-            }).addOnCompleteListener(task -> {
+                               final String precio, final String categoria, final Uri imagenUri) {
 
-                if(task.isSuccessful()){
+            if (imagenUri != null) {
+                final StorageReference mStorageRef = mStorage.child(categoria).child(nombre);
 
-                    Uri downloadLink = task.getResult();
-                    Map<String,Object> product = new HashMap<>();
+                UploadTask uploadTask = mStorageRef.putFile(imagenUri);
+                uploadTask.continueWithTask(task -> {
 
-                    product.put("nombre",nombre);
-                    product.put("cantidad",cantidad);
-                    product.put("codigo",codigo);
-                    product.put("precio",precio);
-                    assert downloadLink != null;
-                    product.put("imagenUrl", downloadLink.toString());
+                    if (!task.isSuccessful()) {
+                        throw Objects.requireNonNull(task.getException());
+                    }
+                    return mStorageRef.getDownloadUrl();
+                }).addOnCompleteListener(task -> {
 
-                    DatabaseReference postRef = mDatabase.child("Articulos").child(categoria).child(nombre);
-                    postRef.setValue(product)
-                            .addOnSuccessListener(task1 -> presenter.addSuccess(true))        //true
-                            .addOnFailureListener(e -> presenter.addSuccess(false));           //false
-                }
-            });
-        }
+                    if (task.isSuccessful()) {
+
+                        Uri downloadUri = task.getResult();
+
+                        assert downloadUri != null;
+                        String urlFoto = downloadUri.toString();
+
+                        Map<String, Object> product = new HashMap<>();
+
+                        product.put("codigo", codigo);
+                        product.put("nombre", nombre);
+                        product.put("cantidad", cantidad);
+                        product.put("precio", precio);
+                        product.put("categoria", categoria);
+                        product.put("imagenUrl", urlFoto);
+
+                        DatabaseReference postRef = mDatabase.child("Articulos").child(categoria).child(nombre);
+                        postRef.updateChildren(product)
+                                .addOnSuccessListener(task1 -> presenter.addSuccess(true))        //true
+                                .addOnFailureListener(e -> presenter.addSuccess(false));
+                    }
+                });
+            }
     }
 }
