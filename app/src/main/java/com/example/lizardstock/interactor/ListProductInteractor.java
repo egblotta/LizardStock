@@ -1,12 +1,15 @@
 package com.example.lizardstock.interactor;
 
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.lizardstock.R;
 import com.example.lizardstock.interfaces.IDetailProduct;
 import com.example.lizardstock.interfaces.IListProduct;
 import com.example.lizardstock.modelo.Product;
 import com.example.lizardstock.adaptador.RecyclerProductAdapter;
+import com.example.lizardstock.modelo.utilidades.Utilidades;
 import com.example.lizardstock.presentador.DetailsPresenter;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;

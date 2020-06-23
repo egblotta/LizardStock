@@ -47,18 +47,18 @@
 
         <EditText
             android:id="@+id/etCantidadUpd"
-            android:layout_width="100dp"
+            android:layout_width="140dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="10dp"
+            android:drawableStart="@drawable/ic_baseline_receipt_24"
             android:inputType="number"
             android:textAlignment="center"
-            android:textSize="30sp"
-            android:drawableStart="@drawable/ic_baseline_receipt_24"/>
+            android:textSize="30sp" />
 
         <EditText
             android:id="@+id/etPrecioUpd"
-            android:layout_width="100dp"
+            android:layout_width="140dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="10dp"

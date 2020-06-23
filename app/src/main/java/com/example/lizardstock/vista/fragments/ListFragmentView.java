@@ -1,7 +1,10 @@
 package com.example.lizardstock.vista.fragments;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,8 +22,6 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.navigation.NavController;
-import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -29,7 +30,7 @@ import com.example.lizardstock.R;
 import com.example.lizardstock.interfaces.IListProduct;
 import com.example.lizardstock.modelo.Product;
 import com.example.lizardstock.presentador.ListPresenter;
-import com.example.lizardstock.utilidades.Utilidades;
+import com.example.lizardstock.modelo.utilidades.Utilidades;
 import com.example.lizardstock.vista.activities.MainActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -37,6 +38,7 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 import butterknife.BindView;
+import butterknife.BindViews;
 import butterknife.ButterKnife;
 
 public class ListFragmentView extends Fragment implements IListProduct.View{
@@ -47,6 +49,8 @@ public class ListFragmentView extends Fragment implements IListProduct.View{
     Switch mSwitch;
     @BindView(R.id.imgSinConexion)
     ImageView imagenSc;
+
+    FloatingActionButton fab;
 
     IListProduct.Presenter presenter;
 
@@ -62,13 +66,8 @@ public class ListFragmentView extends Fragment implements IListProduct.View{
 
         imagenSc.setVisibility(View.INVISIBLE);
 
-        final FloatingActionButton fab = ((MainActivity) requireActivity()).getFab();
-        if(fab!=null){
-            ((MainActivity) requireActivity()).fabShow();
-        }
-
-        switchOn(view);
-        optionSpinner(view);
+        fabView();
+        checkInternet(view);
         return view;
     }
 
@@ -77,16 +76,13 @@ public class ListFragmentView extends Fragment implements IListProduct.View{
     }
 
     private void switchOn(final View view){
-        mSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(isChecked){
-                    Utilidades.visualizacion=Utilidades.LIST;
-                }else{
-                    Utilidades.visualizacion=Utilidades.GRID;
-                }
-                optionSpinner(view);
+        mSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if(isChecked){
+                Utilidades.visualizacion=Utilidades.LIST;
+            }else{
+                Utilidades.visualizacion=Utilidades.GRID;
             }
+            optionSpinner(view);
         });
     }
 
@@ -187,4 +183,31 @@ public class ListFragmentView extends Fragment implements IListProduct.View{
 
     @Override
     public void onDestroyView() {super.onDestroyView();}
+
+    public void fabView(){
+        fab = ((MainActivity) requireActivity()).getFab();
+        if(fab!=null){
+            ((MainActivity) requireActivity()).fabShow();
+        }
+    }
+
+    private void checkInternet(View view){
+        ConnectivityManager cm = (ConnectivityManager) requireContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        assert cm != null;
+        NetworkInfo activeNetwork = cm.getActiveNetworkInfo();      //describe el estado de red
+        boolean isConnected = activeNetwork != null && activeNetwork.isConnectedOrConnecting();
+        if(isConnected){
+            switchOn(view);
+            optionSpinner(view);
+        }
+        else{
+            imagenSc.setVisibility(View.VISIBLE);
+            fab.hide();
+            mSwitch.setVisibility(View.GONE);
+            spnLista.setVisibility(View.GONE);
+            Toast.makeText(getContext(), "No hay conexion a internet", Toast.LENGTH_SHORT).show();
+        }
+
+    }
 }

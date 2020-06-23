@@ -20,7 +20,7 @@ import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
 import com.example.lizardstock.R;
 import com.example.lizardstock.modelo.Product;
-import com.example.lizardstock.utilidades.Utilidades;
+import com.example.lizardstock.modelo.utilidades.Utilidades;
 
 import java.util.List;
 

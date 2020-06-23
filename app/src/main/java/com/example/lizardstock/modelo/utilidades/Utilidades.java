@@ -1,4 +1,4 @@
-package com.example.lizardstock.utilidades;
+package com.example.lizardstock.modelo.utilidades;
 
 public class Utilidades {
 

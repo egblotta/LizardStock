@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
@@ -15,11 +16,14 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.provider.OpenableColumns;
+import android.text.InputType;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -42,6 +46,7 @@ import com.example.lizardstock.presentador.DetailsPresenter;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.BindViews;
@@ -63,8 +68,6 @@ public class DetailFragment extends DialogFragment implements IDetailProduct.Vie
     private String categoria;
 
     private IDetailProduct.Presenter presenter;
-    private Uri imageUri;
-    private static final int PICK_IMAGE_REQUEST = 1;
 
     public DetailFragment() {
         // Required empty public constructor
@@ -78,6 +81,11 @@ public class DetailFragment extends DialogFragment implements IDetailProduct.Vie
 
         btnModificar.setOnClickListener(this);
         presenter = new DetailsPresenter(this);
+        etViews.get(0).setOnClickListener(this);
+        etViews.get(1).setOnClickListener(this);
+
+        disableEditText(etViews.get(0));
+        disableEditText(etViews.get(1));
 
         getData();
         return view;
@@ -86,8 +94,16 @@ public class DetailFragment extends DialogFragment implements IDetailProduct.Vie
     @Override
     public void onClick(View v) {
 
-        if (v.getId() == R.id.btnUpdate) {
-            sendData();
+        switch (v.getId()){
+            case R.id.btnUpdate:
+                sendData();
+                break;
+            case R.id.etCantidadUpd:
+                enableEditText(etViews.get(0));
+                break;
+            case R.id.etPrecioUpd:
+                enableEditText(etViews.get(1));
+                break;
         }
     }
 
@@ -100,7 +116,7 @@ public class DetailFragment extends DialogFragment implements IDetailProduct.Vie
         txtViews.get(1).setText(mArgs.getString("nombre"));
         etViews.get(0).setText(mArgs.getString("cantidad"));
         etViews.get(1).setText(mArgs.getString("precio"));
-        imageUri = Uri.parse(mArgs.getString("imagen"));
+        Uri imageUri = Uri.parse(mArgs.getString("imagen"));
         categoria = mArgs.getString("categoria");
 
         //Carga la imagen en el imageView usando Glide
@@ -152,5 +168,14 @@ public class DetailFragment extends DialogFragment implements IDetailProduct.Vie
 
     @Override
     public void onDestroyView() {super.onDestroyView();}
+
+    private void disableEditText(EditText editText) {
+        editText.setInputType(InputType.TYPE_NULL);
+        editText.setBackgroundColor(Color.TRANSPARENT);
+    }
+
+    private void enableEditText(EditText editText) {
+        editText.setInputType(InputType.TYPE_CLASS_NUMBER);
+    }
 
 }
