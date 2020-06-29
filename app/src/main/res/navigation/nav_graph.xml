@@ -33,7 +33,7 @@
     </fragment>
     <fragment
         android:id="@+id/detailFragment"
-        android:name="com.example.lizardstock.vista.fragments.DetailFragment"
+        android:name="com.example.lizardstock.vista.fragments.DetailFragmentView"
         android:label="fragment_detail"
-        tools:layout="@layout/fragment_detail" />
+        tools:layout="@layout/fragment_detail_product" />
 </navigation>

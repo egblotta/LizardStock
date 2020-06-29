@@ -1,7 +1,5 @@
 package com.example.lizardstock.interfaces;
 
-import android.view.View;
-
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.lizardstock.modelo.Product;

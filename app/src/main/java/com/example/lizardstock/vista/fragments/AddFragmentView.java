@@ -4,9 +4,11 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
+
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.OpenableColumns;
+
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,7 +29,6 @@ import com.example.lizardstock.presentador.AddPresenter;
 
 import java.util.List;
 
-import butterknife.BindAnim;
 import butterknife.BindView;
 import butterknife.BindViews;
 import butterknife.ButterKnife;
@@ -131,7 +132,6 @@ public class AddFragmentView extends Fragment implements View.OnClickListener, I
                 && !TextUtils.isEmpty(etViews.get(2).getText().toString())
                 && !TextUtils.isEmpty(etViews.get(3).getText().toString())){
             presenter.firebaseUpload(codigo, nombre, cantidad, precio, categoria, imageUri);
-            cleanFields();
         }else{
             Toast.makeText(getContext(), "Ningun campo puede estar vacio.", Toast.LENGTH_SHORT).show();
             progressAdd.setVisibility(View.GONE);
@@ -143,6 +143,7 @@ public class AddFragmentView extends Fragment implements View.OnClickListener, I
         if(success)
             Toast.makeText(getContext(), "Articulo cargado.", Toast.LENGTH_SHORT).show();
         progressAdd.setVisibility(View.GONE);
+        cleanFields();
     }
 
     private void cleanFields() {

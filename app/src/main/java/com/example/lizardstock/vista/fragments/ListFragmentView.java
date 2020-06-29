@@ -6,12 +6,13 @@ import android.content.DialogInterface;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Switch;
@@ -19,9 +20,11 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -35,10 +38,8 @@ import com.example.lizardstock.vista.activities.MainActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
-import java.util.Objects;
 
 import butterknife.BindView;
-import butterknife.BindViews;
 import butterknife.ButterKnife;
 
 public class ListFragmentView extends Fragment implements IListProduct.View{
@@ -168,7 +169,7 @@ public class ListFragmentView extends Fragment implements IListProduct.View{
         args.putString("categoria",categoria);
         args.putString("imagen",imagen);
 
-        DialogFragment dialog = new DetailFragment();
+        DialogFragment dialog = new DetailFragmentView();
         dialog.setArguments(args);
         dialog.show(ft,"Detail Fragment");
     }

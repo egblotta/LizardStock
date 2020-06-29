@@ -2,13 +2,8 @@ package com.example.lizardstock.interactor;
 
 import android.net.Uri;
 
-import androidx.annotation.NonNull;
-
 import com.example.lizardstock.interfaces.IAddProduct;
-import com.google.android.gms.tasks.Continuation;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.Task;
+
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;

@@ -2,6 +2,7 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/LL"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -11,16 +12,24 @@
     android:layout_marginBottom="20dp"
     android:layout_gravity="center"
     android:orientation="vertical"
-    tools:context=".vista.fragments.DetailFragment">
+    tools:context=".vista.fragments.DetailFragmentView">
 
 
-        <ImageView
+        <com.jsibbold.zoomage.ZoomageView
             android:id="@+id/imgProductoUpd"
             android:layout_width="500dp"
             android:layout_height="500dp"
             android:layout_gravity="center"
             android:layout_marginTop="5dp"
             android:layout_marginBottom="10dp"
+            app:zoomage_restrictBounds="false"
+            app:zoomage_animateOnReset="true"
+            app:zoomage_autoResetMode="UNDER"
+            app:zoomage_autoCenter="true"
+            app:zoomage_zoomable="true"
+            app:zoomage_translatable="true"
+            app:zoomage_minScale="0.6"
+            app:zoomage_maxScale="8"
             android:src="@drawable/ic_image_black_24dp" />
 
         <TextView

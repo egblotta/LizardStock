@@ -1,35 +1,23 @@
 package com.example.lizardstock.vista.fragments;
 
-import android.app.Activity;
-import android.content.Context;
-import android.content.Intent;
-import android.database.Cursor;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.RecyclerView;
 
-import android.provider.OpenableColumns;
 import android.text.InputType;
 import android.text.TextUtils;
-import android.util.Log;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
-import android.view.inputmethod.InputMethodManager;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -39,20 +27,16 @@ import com.bumptech.glide.load.engine.GlideException;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
 import com.example.lizardstock.R;
-import com.example.lizardstock.interactor.DetailProductInteractor;
 import com.example.lizardstock.interfaces.IDetailProduct;
-import com.example.lizardstock.modelo.Product;
 import com.example.lizardstock.presentador.DetailsPresenter;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.BindViews;
 import butterknife.ButterKnife;
 
-public class DetailFragment extends DialogFragment implements IDetailProduct.View, View.OnClickListener {
+public class DetailFragmentView extends DialogFragment implements IDetailProduct.View, View.OnClickListener {
 
     @BindViews({R.id.txtCodigoUpd,R.id.txtNombreUpd})
     List<TextView> txtViews;
@@ -69,14 +53,14 @@ public class DetailFragment extends DialogFragment implements IDetailProduct.Vie
 
     private IDetailProduct.Presenter presenter;
 
-    public DetailFragment() {
+    public DetailFragmentView() {
         // Required empty public constructor
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.fragment_detail, container, false);
+        View view = inflater.inflate(R.layout.fragment_detail_product, container, false);
         ButterKnife.bind(this, view);
 
         btnModificar.setOnClickListener(this);
@@ -156,17 +140,6 @@ public class DetailFragment extends DialogFragment implements IDetailProduct.Vie
     }
 
     @Override
-    public void successMessage(Boolean success) {
-        if(success){
-            Toast.makeText(getContext(), "Articulo modificado.", Toast.LENGTH_SHORT).show();
-            progressBar.setVisibility(View.GONE);
-        }else{
-            Toast.makeText(getContext(), "Error al modificar los datos.", Toast.LENGTH_SHORT).show();
-            progressBar.setVisibility(View.GONE);
-        }
-    }
-
-    @Override
     public void onDestroyView() {super.onDestroyView();}
 
     private void disableEditText(EditText editText) {
@@ -178,4 +151,14 @@ public class DetailFragment extends DialogFragment implements IDetailProduct.Vie
         editText.setInputType(InputType.TYPE_CLASS_NUMBER);
     }
 
+    @Override
+    public void successMessage(boolean success) {
+        if(success){
+            Toast.makeText(getContext(), "Articulo modificado.", Toast.LENGTH_SHORT).show();
+            progressBar.setVisibility(View.GONE);
+        }else{
+            Toast.makeText(getContext(), "Error al modificar los datos.", Toast.LENGTH_SHORT).show();
+            progressBar.setVisibility(View.GONE);
+        }
+    }
 }
