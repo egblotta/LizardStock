@@ -10,6 +10,7 @@ class DetailProductInteractor(private val presenter: IDetailProduct.Presenter) :
     private val mDatabase: DatabaseReference = FirebaseDatabase.getInstance().reference
 
     override fun firebaseUpdate(codigo: String, nombre: String, cantidad: String, precio: String, categoria: String) {
+
         val product: MutableMap<String, Any> = HashMap()
         product["nombre"] = nombre
         product["cantidad"] = cantidad

@@ -23,6 +23,13 @@ public class AddPresenter implements IAddProduct.Presenter {
     }
 
     @Override
+    public void addError(boolean error) {
+        if (view != null) {
+            view.addError(error);
+        }
+    }
+
+    @Override
     public void firebaseUpload(final String codigo, final String nombre, final String cantidad,
                                final String precio, final String categoria, final Uri imagenUri) {
         if (view != null) {

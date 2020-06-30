@@ -127,14 +127,15 @@ public class AddFragmentView extends Fragment implements View.OnClickListener, I
         String precio = etViews.get(3).getText().toString().trim();
         String categoria = spnCategoria.getSelectedItem().toString().trim();
 
-        if(!TextUtils.isEmpty(etViews.get(0).getText().toString())
+        if(imageUri!=null
+                && !TextUtils.isEmpty(etViews.get(0).getText().toString())
                 && !TextUtils.isEmpty(etViews.get(1).getText().toString())
                 && !TextUtils.isEmpty(etViews.get(2).getText().toString())
-                && !TextUtils.isEmpty(etViews.get(3).getText().toString())){
+                && !TextUtils.isEmpty(etViews.get(3).getText().toString()))
+        {
             presenter.firebaseUpload(codigo, nombre, cantidad, precio, categoria, imageUri);
         }else{
-            Toast.makeText(getContext(), "Ningun campo puede estar vacio.", Toast.LENGTH_SHORT).show();
-            progressAdd.setVisibility(View.GONE);
+            addError(true);
         }
     }
 
@@ -146,11 +147,17 @@ public class AddFragmentView extends Fragment implements View.OnClickListener, I
         cleanFields();
     }
 
+    public void addError(boolean error) {
+        if(error)
+            Toast.makeText(getContext(), "Ningun campo puede estar vacio.", Toast.LENGTH_SHORT).show();
+        progressAdd.setVisibility(View.GONE);
+    }
+
     private void cleanFields() {
-        etViews.get(0).setText("");
-        etViews.get(1).setText("");
-        etViews.get(2).setText("");
-        etViews.get(3).setText("");
+        etViews.get(0).setText(null);
+        etViews.get(1).setText(null);
+        etViews.get(2).setText(null);
+        etViews.get(3).setText(null);
         imgProducto.setImageResource(R.drawable.ic_image_black_24dp);
     }
 
